@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cardview_margin">5dp</dimen>
+    <dimen name="cardview_elevation">2dp</dimen>
+    <dimen name="image_margin">10dp</dimen>
+    <dimen name="name">12sp</dimen>
+    <dimen name="full_name">10sp</dimen>
+    <dimen name="watchers">6sp</dimen>
+</resources>
