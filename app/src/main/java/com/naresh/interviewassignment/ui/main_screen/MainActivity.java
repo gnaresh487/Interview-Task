@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity {
 
     private void setAdapter() {
         homeViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel.class);
-        homeAdapter = new HomeAdapter();
+        homeAdapter = new HomeAdapter(this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mainBinding.recyclerView.setLayoutManager(layoutManager);
         mainBinding.recyclerView.setAdapter(homeAdapter);

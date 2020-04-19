@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.naresh.interviewassignment.di.ViewModelFactory;
 import com.naresh.interviewassignment.di.ViewModelKey;
+import com.naresh.interviewassignment.ui.details_screen.DetailsViewModel;
 import com.naresh.interviewassignment.ui.main_screen.HomeViewModel;
 
 import dagger.Binds;
@@ -20,5 +21,10 @@ public abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(HomeViewModel.class)
-    protected abstract ViewModel movieListViewModel(HomeViewModel viewModel);
+    protected abstract ViewModel homeViewModel(HomeViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailsViewModel.class)
+    protected abstract ViewModel detailsViewModel(DetailsViewModel viewModel);
 }

@@ -67,6 +67,7 @@
                 android:id="@+id/watcher_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{model.watchers.toString()}"
                 android:textSize="@dimen/watchers"
                 app:layout_constraintLeft_toRightOf="@+id/watcher_count_text"
                 app:layout_constraintBottom_toBottomOf="parent"

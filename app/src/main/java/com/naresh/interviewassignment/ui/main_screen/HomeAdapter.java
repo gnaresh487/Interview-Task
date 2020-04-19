@@ -1,5 +1,7 @@
 package com.naresh.interviewassignment.ui.main_screen;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,14 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.naresh.interviewassignment.R;
 import com.naresh.interviewassignment.databinding.HomeListBinding;
+import com.naresh.interviewassignment.ui.details_screen.DetailsActivity;
 import com.naresh.interviewassignment.ui.main_screen.model.HomeModel;
 import com.naresh.interviewassignment.util.NetworkState;
 
 public class HomeAdapter extends PagedListAdapter<HomeModel, HomeAdapter.ViewHolder> {
     private NetworkState networkState;
 
-    public HomeAdapter() {
+    private Context context;
+    HomeAdapter(Context context) {
         super(HomeModel.DIFF_CALLBACK);
+        this.context = context;
     }
 
     @NonNull
@@ -32,6 +37,16 @@ public class HomeAdapter extends PagedListAdapter<HomeModel, HomeAdapter.ViewHol
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HomeModel homeModel = getItem(position);
         holder.homeListBinding.setModel(homeModel);
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, DetailsActivity.class);
+            if(homeModel != null) {
+                intent.putExtra("project_url", homeModel.getHtmlUrl());
+                intent.putExtra("description", homeModel.getDescription());
+                intent.putExtra("name", homeModel.getName());
+                intent.putExtra("contributors_url", homeModel.getContributorsUrl());
+            }
+            context.startActivity(intent);
+        });
     }
 
     @Override

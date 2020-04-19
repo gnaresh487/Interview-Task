@@ -34,6 +34,9 @@ public class HomeModel implements Parcelable {
     @SerializedName("watchers")
     @Expose
     private Integer watchers;
+    @SerializedName("contributors_url")
+    @Expose
+    private String contributorsUrl;
 
     public final static Creator<HomeModel> CREATOR = new Creator<HomeModel>() {
 
@@ -58,6 +61,7 @@ public class HomeModel implements Parcelable {
         this.htmlUrl = ((String) in.readValue((String.class.getClassLoader())));
         this.description = ((String) in.readValue((String.class.getClassLoader())));
         this.watchers = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.contributorsUrl = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     public HomeModel() {
@@ -119,6 +123,14 @@ public class HomeModel implements Parcelable {
         this.watchers = watchers;
     }
 
+    public String getContributorsUrl() {
+        return contributorsUrl;
+    }
+
+    public void setContributorsUrl(String contributorsUrl) {
+        this.contributorsUrl = contributorsUrl;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(id);
         dest.writeValue(name);
@@ -127,6 +139,7 @@ public class HomeModel implements Parcelable {
         dest.writeValue(htmlUrl);
         dest.writeValue(description);
         dest.writeValue(watchers);
+        dest.writeValue(contributorsUrl);
     }
 
     public int describeContents() {

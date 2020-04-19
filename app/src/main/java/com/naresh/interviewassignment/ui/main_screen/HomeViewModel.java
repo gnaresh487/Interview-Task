@@ -19,7 +19,7 @@ import javax.inject.Inject;
 public class HomeViewModel extends ViewModel {
 
     private LiveData<NetworkState> networkState;
-    private LiveData articleLiveData;
+    private LiveData<PagedList<HomeModel>> articleLiveData;
 
     @Inject
     public HomeViewModel(ApiService apiService){
@@ -42,11 +42,11 @@ public class HomeViewModel extends ViewModel {
                 .build();
     }
 
-    public LiveData<NetworkState> getNetworkState() {
+    LiveData<NetworkState> getNetworkState() {
         return networkState;
     }
 
-    public LiveData<PagedList<HomeModel>> getArticleLiveData() {
+    LiveData<PagedList<HomeModel>> getArticleLiveData() {
         return articleLiveData;
     }
 }

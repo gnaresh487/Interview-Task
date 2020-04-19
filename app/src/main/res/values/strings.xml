@@ -2,4 +2,9 @@
     <string name="app_name">Interview Assignment</string>
     <string name="search_button">filter</string>
 
+    //Details Screen
+    <string name="project_link">Project Link</string>
+    <string name="desc">Description</string>
+    <string name="contributors">Contributors</string>
+
 </resources>
