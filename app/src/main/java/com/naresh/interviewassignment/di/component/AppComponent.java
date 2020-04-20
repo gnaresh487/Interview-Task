@@ -5,6 +5,7 @@ import android.app.Application;
 import com.naresh.interviewassignment.MyApplication;
 import com.naresh.interviewassignment.di.module.ActivityModule;
 import com.naresh.interviewassignment.di.module.ApiModule;
+import com.naresh.interviewassignment.di.module.DbModule;
 import com.naresh.interviewassignment.di.module.ViewModelModule;
 
 import javax.inject.Singleton;
@@ -13,7 +14,7 @@ import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.support.AndroidSupportInjectionModule;
 
-@Component(modules = {ApiModule.class, ViewModelModule.class, ActivityModule.class, AndroidSupportInjectionModule.class})
+@Component(modules = {ApiModule.class, ViewModelModule.class, ActivityModule.class, AndroidSupportInjectionModule.class, DbModule.class})
 @Singleton
 public interface AppComponent {
 

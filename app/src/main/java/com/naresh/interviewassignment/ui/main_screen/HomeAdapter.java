@@ -18,8 +18,8 @@ import com.naresh.interviewassignment.util.NetworkState;
 
 public class HomeAdapter extends PagedListAdapter<HomeModel, HomeAdapter.ViewHolder> {
     private NetworkState networkState;
-
     private Context context;
+
     HomeAdapter(Context context) {
         super(HomeModel.DIFF_CALLBACK);
         this.context = context;
@@ -29,7 +29,7 @@ public class HomeAdapter extends PagedListAdapter<HomeModel, HomeAdapter.ViewHol
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         HomeListBinding itemBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()),
-                        R.layout.home_list, viewGroup, false);
+                R.layout.home_list, viewGroup, false);
         return new ViewHolder(itemBinding);
     }
 
@@ -39,7 +39,7 @@ public class HomeAdapter extends PagedListAdapter<HomeModel, HomeAdapter.ViewHol
         holder.homeListBinding.setModel(homeModel);
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetailsActivity.class);
-            if(homeModel != null) {
+            if (homeModel != null) {
                 intent.putExtra("project_url", homeModel.getHtmlUrl());
                 intent.putExtra("description", homeModel.getDescription());
                 intent.putExtra("name", homeModel.getName());
@@ -58,10 +58,10 @@ public class HomeAdapter extends PagedListAdapter<HomeModel, HomeAdapter.ViewHol
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private HomeListBinding homeListBinding;
 
-        public ViewHolder(HomeListBinding homeListBinding) {
+        ViewHolder(HomeListBinding homeListBinding) {
             super(homeListBinding.getRoot());
             this.homeListBinding = homeListBinding;
         }
@@ -71,7 +71,7 @@ public class HomeAdapter extends PagedListAdapter<HomeModel, HomeAdapter.ViewHol
         return networkState != null && networkState != NetworkState.LOADED;
     }
 
-    public void setNetworkState(NetworkState newNetworkState) {
+    void setNetworkState(NetworkState newNetworkState) {
         NetworkState previousState = this.networkState;
         boolean previousExtraRow = hasExtraRow();
         this.networkState = newNetworkState;

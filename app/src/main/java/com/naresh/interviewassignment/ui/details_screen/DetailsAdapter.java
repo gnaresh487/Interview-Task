@@ -9,13 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.naresh.interviewassignment.R;
 import com.naresh.interviewassignment.databinding.ContributorsListBinding;
-import com.naresh.interviewassignment.util.NetworkState;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.DetailsViewHolder>{
-    private NetworkState networkState;
     private List<ContributorModel> contributorModels;
 
     public DetailsAdapter() {
@@ -45,7 +43,7 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.DetailsV
         }
     }
 
-    public void setContributorModels(List<ContributorModel> contributorModels) {
+    void setContributorModels(List<ContributorModel> contributorModels) {
         this.contributorModels = contributorModels;
         notifyDataSetChanged();
     }

@@ -19,12 +19,24 @@ public class ContributorModel implements Serializable {
     @Expose
     private String contributorAvatar;
 
+    @SerializedName("login")
+    @Expose
+    private String name;
+
     public String getContributorAvatar() {
         return contributorAvatar;
     }
 
     public void setContributorAvatar(String contributorAvatar) {
         this.contributorAvatar = contributorAvatar;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @BindingAdapter({ "avatar_url" })
@@ -36,4 +48,5 @@ public class ContributorModel implements Serializable {
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(imageView);
     }
+
 }

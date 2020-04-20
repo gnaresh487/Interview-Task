@@ -2,7 +2,7 @@ package com.naresh.interviewassignment.util;
 
 public class NetworkState {
 
-    public enum Status{
+    public enum Status {
         RUNNING,
         SUCCESS,
         FAILED
@@ -15,14 +15,14 @@ public class NetworkState {
     public static final NetworkState LOADED;
     public static final NetworkState LOADING;
 
-    public NetworkState(Status status, String msg) {
+    private NetworkState(Status status, String msg) {
         this.status = status;
         this.msg = msg;
     }
 
     static {
-        LOADED=new NetworkState(Status.SUCCESS,"Success");
-        LOADING=new NetworkState(Status.RUNNING,"Running");
+        LOADED = new NetworkState(Status.SUCCESS, "Success");
+        LOADING = new NetworkState(Status.RUNNING, "Running");
     }
 
     public Status getStatus() {

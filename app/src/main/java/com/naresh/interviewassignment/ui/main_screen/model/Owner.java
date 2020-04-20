@@ -4,6 +4,8 @@ package com.naresh.interviewassignment.ui.main_screen.model;
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;

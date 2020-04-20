@@ -26,7 +26,6 @@ public class DetailsActivity extends BaseActivity {
     ViewModelFactory viewModelFactory;
     private DetailsViewModel detailsViewModel;
     private DetailsAdapter detailsAdapter;
-    private String projectUrl, name, description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +39,9 @@ public class DetailsActivity extends BaseActivity {
         setAdapter();
         Intent intent = getIntent();
         if(intent.getExtras() != null){
-            name = intent.getExtras().getString("name");
-            projectUrl = intent.getExtras().getString("project_url");
-            description = intent.getExtras().getString("description");
+            String name = intent.getExtras().getString("name");
+            String projectUrl = intent.getExtras().getString("project_url");
+            String description = intent.getExtras().getString("description");
             detailsBinding.projectLink.setText(projectUrl);
             detailsBinding.description.setText(description);
             getContributorsData(name);
@@ -67,9 +66,5 @@ public class DetailsActivity extends BaseActivity {
                 detailsAdapter.setContributorModels(contributorModels);
             });
         }
-    }
-
-    private void openWeb() {
-
     }
 }

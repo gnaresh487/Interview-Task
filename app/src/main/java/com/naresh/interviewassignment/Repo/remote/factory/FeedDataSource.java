@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
 
+import com.naresh.interviewassignment.Repo.local_db.dao.HomeDao;
 import com.naresh.interviewassignment.Repo.remote.ApiService;
 import com.naresh.interviewassignment.ui.main_screen.model.HomeModel;
 import com.naresh.interviewassignment.util.NetworkState;
@@ -28,9 +29,11 @@ public class FeedDataSource extends PageKeyedDataSource<Long, HomeModel> {
     private MutableLiveData initialLoading;
     private CompositeDisposable compositeDisposable;
     private ApiService apiService;
+    private HomeDao homeDao;
 
-    public FeedDataSource(ApiService apiService) {
+    public FeedDataSource(ApiService apiService, HomeDao homeDao) {
         this.apiService = apiService;
+        this.homeDao = homeDao;
         compositeDisposable = new CompositeDisposable();
         networkState = new MutableLiveData();
         initialLoading = new MutableLiveData();
@@ -59,19 +62,15 @@ public class FeedDataSource extends PageKeyedDataSource<Long, HomeModel> {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(homeData -> {
+                .subscribe(homeModels -> {
                             networkState.postValue(NetworkState.LOADED);
-                            Log.d(TAG, "loadInitial: "+homeData);
-                            callback.onResult(homeData, null, 1l);
+                            homeDao.insertReposData(homeModels);
+                            callback.onResult(homeModels, null, 1l);
                         },
                         throwable -> {
                             Log.d(TAG, "loadInitial: error "+throwable);
                             networkState.postValue(NetworkState.LOADED);
                         });
-        /*compositeDisposable.add(logInResponse
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(getMarkerData(params, callback)));*/
     }
 
     @Override
@@ -100,6 +99,7 @@ public class FeedDataSource extends PageKeyedDataSource<Long, HomeModel> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(homeData -> {
                     networkState.postValue(NetworkState.LOADED);
+                    homeDao.insertReposData(homeData);
                     callback.onResult(homeData, params.key + 1);
                 }, throwable -> {
                     networkState.postValue(NetworkState.LOADED);

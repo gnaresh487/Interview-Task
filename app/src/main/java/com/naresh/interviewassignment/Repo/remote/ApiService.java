@@ -15,6 +15,7 @@ public interface ApiService {
     @GET("users/geerlingguy/repos")
     Observable<List<HomeModel>> getGitRepos(@Query("per_page") String q,
                                             @Query("page") Long page);
+
     @GET("repos/geerlingguy/{name}/contributors")
     Observable<List<ContributorModel>> getContributors(@Path("name") String user);
 }

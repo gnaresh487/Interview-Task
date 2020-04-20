@@ -6,13 +6,18 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-
+@Entity
 public class HomeModel implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -24,6 +29,7 @@ public class HomeModel implements Parcelable {
     private String fullName;
     @SerializedName("owner")
     @Expose
+    @Embedded
     private Owner owner;
     @SerializedName("html_url")
     @Expose
