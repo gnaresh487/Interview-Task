@@ -1,6 +1,9 @@
 package com.naresh.interviewassignment.ui.main_screen;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import androidx.paging.LivePagedListBuilder;
@@ -22,11 +25,15 @@ public class HomeViewModel extends ViewModel {
     private LiveData<NetworkState> networkState;
     private LiveData<PagedList<HomeModel>> reposLiveData;
     private HomeDao homeDao;
+    private PagedList.Config pagedListConfig;
+    private MutableLiveData<String> mutableQuery;
 
     @Inject
     public HomeViewModel(ApiService apiService, HomeDao homeDao) {
-        getData(apiService, homeDao);
+        mutableQuery = new MutableLiveData<>();
+        mutableQuery.postValue("");
         this.homeDao = homeDao;
+        getData(apiService, homeDao);
     }
 
     private void getData(ApiService apiService, HomeDao homeDao) {
@@ -35,7 +42,7 @@ public class HomeViewModel extends ViewModel {
         networkState = Transformations.switchMap(dataFactory.getMutableLiveData(),
                 dataSource -> dataSource.getNetworkState());
 
-        PagedList.Config pagedListConfig =
+        pagedListConfig =
                 (new PagedList.Config.Builder())
                         .setEnablePlaceholders(false)
                         .setPageSize(10).build();
@@ -44,31 +51,34 @@ public class HomeViewModel extends ViewModel {
                 .build();
     }
 
-/*
-    public void filteredData() {
-        reposLiveData = Transformations.switchMap(
-                filterText,
+    LiveData<PagedList<HomeModel>> filteredData(boolean isNetworkAvailable) {
+
+        return Transformations.switchMap(
+                mutableQuery,
                 (input) -> {
                     if (input != null && !input.equals("")) {
-                        return reposLiveData;
+                        return getQueryData(input);
                     } else {
-                        return reposLiveData;
+                        if (isNetworkAvailable) {
+                            return reposLiveData;
+                        } else {
+                            return getLocalDbLiveData();
+                        }
                     }
                 });
     }
-*/
 
     LiveData<NetworkState> getNetworkState() {
         return networkState;
     }
 
-    LiveData<PagedList<HomeModel>> getReposLiveData() {
-        return reposLiveData;
+    LiveData<PagedList<HomeModel>> getQueryData(String input) {
+        return (new LivePagedListBuilder(homeDao.getLocalGitReposByName(input), pagedListConfig))
+                .build();
     }
 
     LiveData<PagedList<HomeModel>> getLocalDbLiveData() {
-
-        PagedList.Config pagedListConfig =
+        pagedListConfig =
                 (new PagedList.Config.Builder())
                         .setEnablePlaceholders(false)
                         .setMaxSize(15)
@@ -78,46 +88,7 @@ public class HomeViewModel extends ViewModel {
                 .build();
     }
 
-    LiveData<PagedList<HomeModel>> getFilterdeData(String filter) {
-
-        PagedList.Config pagedListConfig =
-                (new PagedList.Config.Builder())
-                        .setEnablePlaceholders(false)
-                        .setPageSize(10).build();
-        return (new LivePagedListBuilder(homeDao.getLocalGitReposByName(filter), pagedListConfig))
-                .build();
+    MutableLiveData<String> getMutableQuery() {
+        return mutableQuery;
     }
-
-  /*  LiveData<PagedList<HomeModel>> getFilterdeData(SearchView searchView){
-        RxSearchObservable.fromView(searchView)
-                .debounce(300, TimeUnit.MILLISECONDS)
-                .filter(new Predicate<String>() {
-                    @Override
-                    public boolean test(String text) {
-                        if (text.isEmpty()) {
-                            //textViewResult.setText("");
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    }
-                })
-                .distinctUntilChanged()
-                .switchMap(new Function<String, ObservableSource<String>>() {
-                    @Override
-                    public ObservableSource<String> apply(String query) {
-                        return homeDao.getLocalGitReposByName(query);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String result) {
-                        textViewResult.setText(result);
-                    }
-                });
-        return reposLiveData;
-    }*/
-
 }
